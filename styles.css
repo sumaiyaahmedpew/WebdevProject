@@ -1,0 +1,353 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+  min-height: 100vh;
+}
+
+header {
+  background: #333;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#go-back {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+#go-back:hover {
+  background: #0056b3;
+}
+
+#products-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* Product Card */
+.product {
+border: 1px solid #ddd;
+  padding: 0.75rem;
+  text-align: center;
+  font-size: x-small;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 230px; /* Fixed height for the card */
+  width: 150px; /* Fixed width for the card */
+  cursor: pointer;
+}
+
+.product-info {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.product-info h3 {
+  margin: 0;
+  font-size: 12px;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.product-info p {
+  margin: 0;
+  font-size: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.product-info button {
+  margin-top: 6px;
+  padding: 0.25rem 0.5rem;
+  font-size: 10px;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.product img {
+  width: 100%;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+
+button {
+  background: #28a745;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #218838;
+}
+
+/* Product Details View */
+#product-details-view {
+  padding: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#product-detail-image {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+#product-detail-specifications {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+#product-detail-specifications th,
+#product-detail-specifications td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+#product-detail-specifications th {
+  background-color: #f4f4f4;
+}
+
+#add-to-cart-from-detail {
+  background: #28a745;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-top: 1rem;
+}
+
+#add-to-cart-from-detail:hover {
+  background: #218838;
+}
+
+/* View Cart Button */
+#view-cart {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 16px;
+  z-index: 1000;
+}
+  
+#view-cart:hover {
+  background: #0056b3;
+}
+  
+  /* Cart Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background: #fff;
+  margin: 10% auto;
+  padding: 1rem;
+  width: 80%;
+  max-width: 600px;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+/* Cart Items Layout */
+#cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr; /* Three columns: name, buttons, amount */
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cart-item h4 {
+  margin: 0;
+  word-break: break-word; /* Allow product names to wrap */
+}
+
+.cart-item-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.cart-item-buttons button {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.cart-item-buttons button:hover {
+  background: #0056b3;
+}
+
+.cart-item-amount {
+  text-align: right;
+}
+
+/* Total Amount */
+#cart-total {
+  font-weight: bold;
+  text-align: right;
+  margin-top: 1rem;
+  margin-left: auto; /* Push to the right */
+  width: fit-content; /* Ensure it doesn't take full width */
+}
+
+/* Clear Cart Button */
+#clear-cart {
+  display: block;
+  margin: 1rem auto 0 auto; /* Center the button */
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+#clear-cart:hover {
+  background: #c82333;
+}
+  
+/* Add-to-Cart Message */
+.message {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: #28a745;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: none;
+  animation: slideIn 0.5s ease, fadeOut 0.5s ease 2.5s;
+}
+
+
+/* Specifications Management Page */
+#search-bar {
+  margin-bottom: 1rem;
+}
+
+#search-input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#product-specs-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#product-specs-table th,
+#product-specs-table td {
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+#product-specs-table th {
+  background-color: #f4f4f4;
+}
+
+.spec-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.spec-checkbox input {
+  margin: 0;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

@@ -1,7 +1,17 @@
 let products = []; // Array to store fetched products
 let cart = JSON.parse(localStorage.getItem("cart")) || []; // Retrieve the cart from localStorage or initialize an empty cart
+let selectedSpecs = JSON.parse(localStorage.getItem("selectedSpecs")) || {}; // Retrieve selected specifications
 
-const productList = document.getElementById("products-container");
+// DOM Elements
+const productsContainer = document.getElementById("products-container");
+const productDetailsView = document.getElementById("product-details-view");
+const productDetailImage = document.getElementById("product-detail-image");
+const productDetailName = document.getElementById("product-detail-name");
+const productDetailPrice = document.getElementById("product-detail-price");
+const productDetailSpecifications = document.getElementById("product-detail-specifications");
+const productDetailDescription = document.getElementById("product-detail-description");
+const addToCartFromDetail = document.getElementById("add-to-cart-from-detail");
+const goBackButton = document.getElementById("go-back");
 const cartModal = document.getElementById("cart-modal");
 const cartItems = document.getElementById("cart-items");
 const cartCount = document.getElementById("cart-count");
@@ -18,7 +28,7 @@ async function fetchProducts() {
     if (!response.ok) {
       throw new Error("Failed to fetch products");
     }
-    products = await response.json();
+    products = await response.json(); // Parse JSON data
     renderProducts(); // Render products after fetching
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -27,23 +37,75 @@ async function fetchProducts() {
 
 // Render Products
 function renderProducts() {
-  const productsContainer = document.getElementById("products-container");
   productsContainer.innerHTML = products
     .map(
       (product) => `
-      <div class="product">
+      <div class="product" onclick="showProductDetails(${product.id})">
         <img src="${product.image}" alt="${product.name}">
         <div class="product-info">
           <h3>${product.name}</h3>
-          <p>${product.description}</p>
+          ${renderSelectedSpecs(product)}
           <p>$${product.price.toFixed(2)}</p>
-          <button onclick="addToCart(${product.id})">Add to Cart</button>
+          <button onclick="event.stopPropagation(); addToCart(${product.id})">Add to Cart</button>
         </div>
       </div>
     `
     )
     .join("");
 }
+
+// Render Selected Specifications
+function renderSelectedSpecs(product) {
+  const specs = selectedSpecs[product.id] || [];
+  return specs
+    .map(
+      (spec) => `
+      <p><strong>${spec.key}:</strong> ${spec.value}</p>
+    `
+    )
+    .join("");
+}
+
+// Show Product Details
+function showProductDetails(productId) {
+  const product = products.find((p) => p.id === productId);
+  if (!product) return;
+
+  // Populate product details view
+  productDetailImage.src = product.image;
+  productDetailName.textContent = product.name;
+  productDetailPrice.textContent = `$${product.price.toFixed(2)}`;
+  productDetailDescription.textContent = product.description;
+
+  // Populate specifications table
+  productDetailSpecifications.innerHTML = Object.entries(product.specifications)
+    .map(
+      ([key, value]) => `
+      <tr>
+        <th>${key}</th>
+        <td>${value}</td>
+      </tr>
+    `
+    )
+    .join("");
+
+  // Set up the "Add to Cart" button in the details view
+  addToCartFromDetail.onclick = () => {
+    addToCart(product.id);
+  };
+
+  // Show product details view and hide product list
+  productsContainer.style.display = "none";
+  productDetailsView.style.display = "block";
+  goBackButton.style.display = "block";
+}
+
+// Go Back to Product List
+goBackButton.addEventListener("click", () => {
+  productsContainer.style.display = "flex";
+  productDetailsView.style.display = "none";
+  goBackButton.style.display = "none";
+});
 
 // Add to Cart
 function addToCart(productId) {
@@ -56,6 +118,7 @@ function addToCart(productId) {
     cart.push({ ...product, quantity: 1 });
   }
 
+  // Show add-to-cart message
   showMessage(`${product.name} has been added to cart`);
 
   updateCart();
@@ -77,18 +140,24 @@ function updateCart() {
   cartItems.innerHTML = cart
     .map(
       (item) => `
-      <div>
+      <div class="cart-item">
         <h4>${item.name}</h4>
-        <p>$${item.price.toFixed(2)} x ${item.quantity}</p>
-        <button onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
-        <button onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+        <div class="cart-item-buttons">
+          <button onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+          <button onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+        </div>
+        <div class="cart-item-amount">
+          $${(item.price * item.quantity).toFixed(2)}
+        </div>
       </div>
     `
     )
     .join("");
-  cartTotal.textContent = cart
-    .reduce((total, item) => total + item.price * item.quantity, 0)
-    .toFixed(2);
+
+  // Update total amount
+  const total = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  cartTotal.textContent = total.toFixed(2);
+  localStorage.setItem("totalAmount", total); // Save total amount for checkout
 }
 
 // Update Quantity
@@ -103,6 +172,13 @@ function updateQuantity(productId, quantity) {
   saveCartToLocalStorage();
 }
 
+// Remove Item from Cart
+function removeFromCart(productId) {
+  cart = cart.filter((item) => item.id !== productId);
+  updateCart();
+  saveCartToLocalStorage();
+}
+
 // Clear Cart
 clearCartButton.addEventListener("click", () => {
   cart = [];
@@ -110,7 +186,7 @@ clearCartButton.addEventListener("click", () => {
   saveCartToLocalStorage();
 });
 
-// Open/Close Modal
+// Open/Close Cart Modal
 viewCartButton.addEventListener("click", () => {
   cartModal.style.display = "block";
 });

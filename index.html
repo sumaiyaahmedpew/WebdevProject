@@ -6,12 +6,14 @@
   <meta name="description" content="A simple shopping cart project">
   <meta name="keywords" content="shopping cart, e-commerce, HTML, CSS, JavaScript">
   <meta name="author" content="Your Name">
-  <title>SmartDeviceBD</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Shopping Cart</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-    <h1>SmartDeviceBD</h1>
+    <h1>My Shopping Cart</h1>
+    <a href="manage-specifications.html" id="manage-specs">Manage Specifications</a>
+    <button id="go-back" style="display: none;">Go Back</button>
   </header>
 
   <!-- Add-to-Cart Message -->
@@ -21,6 +23,16 @@
     <!-- Product List -->
     <div id="products-container"></div>
 
+    <!-- Product Details View -->
+    <div id="product-details-view" style="display: none;">
+      <img id="product-detail-image" src="" alt="Product Image">
+      <h2 id="product-detail-name"></h2>
+      <p id="product-detail-price"></p>
+      <table id="product-detail-specifications"></table>
+      <p id="product-detail-description"></p>
+      <button id="add-to-cart-from-detail">Add to Cart</button>
+    </div>
+
     <!-- Cart Modal -->
     <div id="cart-modal" class="modal">
       <div class="modal-content">
@@ -29,8 +41,10 @@
         <div id="cart-items"></div>
         <p>Total: $<span id="cart-total">0.00</span></p>
         <button id="clear-cart">Clear Cart</button>
+        <a href="checkout.html" id="checkout-button">Proceed to Checkout</a>
       </div>
     </div>
+    
   </main>
 
   <!-- View Cart Button -->

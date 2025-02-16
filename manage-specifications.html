@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage Product Specifications">
+  <meta name="keywords" content="specifications, management, HTML, CSS, JavaScript">
+  <meta name="author" content="Your Name">
+  <title>Manage Specifications</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Manage Specifications</h1>
+    <a href="index.html" id="go-back">Back to Products</a>
+  </header>
+
+  <main>
+    <!-- Search Bar -->
+    <div id="search-bar">
+      <input type="text" id="search-input" placeholder="Search for a product...">
+    </div>
+
+    <!-- Product Specifications Table -->
+    <table id="product-specs-table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Specifications</th>
+        </tr>
+      </thead>
+      <tbody id="product-specs-list"></tbody>
+    </table>
+  </main>
+
+  <script src="manage-specifications.js"></script>
+</body>
+</html>
